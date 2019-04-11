@@ -85,8 +85,8 @@ $TestArray = @(
     "StringArray_Default_2"
 )
 
-$path = Join-Path (Split-Path -Path $PSCommandPath -Parent) 'ConfigFile.psm1'
-Import-Module $path -ErrorAction Stop -Force
+$modulePath = Join-Path (Join-Path (Split-Path -Path $PSCommandPath -Parent) 'ConfigFile') 'ConfigFile.psm1'
+Import-Module $modulePath -ErrorAction Stop -Force
 
 Import-ConfigFile -DefaultParameters $PSBoundParameters
 
