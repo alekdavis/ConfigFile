@@ -117,12 +117,15 @@ A config file must be in the [JSON](https://www.json.org/) format, such as:
 The `_meta` element describes the config file structure. It does not include any configuration settings. The important attributes of the `_meta` element are:
 
 `version`
+
 Can be used to handle future file schema changes.
 
 `strict`
+
 When set to `true`, every config setting that needs to be used must have the `hasValue` attribute set to `true`; if the `strict` element is missing orset to `false`, every config setting that gets validated by the PowerShell's if statement and resolves to `true` will be imported.
 
 `prefix`
+
 Identifies the prefix that indicates that the JSON element should not be processed. The default value is the underscore character.
 
 The `_meta` elements are optional and can be used for improved readability. For example, they may include parameter descriptions, special instructions, default values, supported value sets, and so on. As long as they do not break the parser, feel free to use them at your convinience.
