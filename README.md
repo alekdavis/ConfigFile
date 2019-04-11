@@ -1,7 +1,7 @@
 # ConfigFile.psm1
 This [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview) module allows you to import config file settings directly into the script variables.
 
-## Cmdlets
+## Cmdlet
 The `ConfigFile` module exports the following cmdlet:
 
 - Import-ConfigFile
@@ -134,7 +134,7 @@ The `_meta` elements are optional and can be used for improved readability. For 
 
 While you can combine literals and expandable variables, do not combine environment variable notation and PowerShell expandable variables, such as `xxx%PATH%xxx$env:PROCESSOR_IDENTIFIER`xxx`, in the same parameter value.
 
-Do not cross-reference other parameters (as illustrated in the example above). There seems to be a bug in PowerShell that would not expand variables under certain conditions (e.g. the expansion works fine when it is called from a script, or when running a script invoking the module in Visual Studio Code, but it fails when the module us invoked from a script running in the Power Shell command prompt).
+Do not cross-reference other parameters (as illustrated in the example above). There seems to be a bug in PowerShell that would not expand variables under certain conditions (e.g. the expansion works fine when it is called from a script, or when running a script invoking the module in Visual Studio Code, but it fails when the module us invoked from a script running in the PowerShell command prompt).
 
 #### Examples
 
