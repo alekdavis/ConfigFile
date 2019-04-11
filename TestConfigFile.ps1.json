@@ -1,0 +1,111 @@
+{
+    "_meta": {
+        "version": "1.0",
+        "strict": false,
+        "prefix": "_",
+        "description": "Sample configuration settings file."
+    },
+    "TestString": {
+        "_meta": {
+            "default": "StringFreeForm_Default"
+        },
+        "value": "StringFreeForm_Config"
+    },
+    "TestStringSet": {
+        "_meta": {
+            "set": "StringFromSet_Default,StringFromSet_Config",
+            "default": "StringFromSet_Default"
+        },
+        "value": "StringFromSet_Config"
+    },
+    "TestStringEmpty": {
+        "_meta": {
+            "default": "StringEmpty_Default"
+        },
+        "hasValue": true,
+        "value": null
+    },
+    "TestLiteralPSVariable": {
+        "_meta": {
+            "default": "$env:PROCESSOR_IDENTIFIER"
+        },
+        "literal": true,
+        "value": "$env:PROCESSOR_IDENTIFIER|$env:PROCESSOR_LEVEL"
+    },
+    "TestLiteralEnvironmentVariable": {
+        "_meta": {
+            "default": "%LOCALAPPDATA%"
+        },
+        "literal": true,
+        "value": "%CommonProgramFiles%|%ProgramFiles%"
+    },
+    "TestStringDefault": {
+        "_meta": {
+            "default": "StringDefault_Default"
+        },
+        "hasValue": false,
+        "value": "StringDefault_Config"
+    },
+    "TestEnvironmentVariable": {
+        "_meta": {
+            "default": "%LOCALAPPDATA%"
+        },
+        "value": "%CommonProgramFiles%|%ProgramFiles%"
+    },
+    "TestPSVariable": {
+        "_meta": {
+            "default": "$env:PROCESSOR_IDENTIFIER"
+        },
+        "value": "$env:PROCESSOR_IDENTIFIER|$env:PROCESSOR_LEVEL"
+    },
+    "TestPSVariableEx": {
+        "_meta": {
+            "default": "$env:CommonProgramFiles"
+        },
+        "value": "XXX$env:CommonProgramFiles`XXX"
+    },
+    "TestParamString1": {
+        "_meta": {
+            "comment": "This gets expanded correctly when script is launched from VS Code, but not from PowerShell.",
+            "default": null
+        },
+        "value": "$TestString"
+    },
+    "TestParamString2": {
+        "_meta": {
+            "comment": "This gets expanded correctly when script is launched from VS Code, but not from PowerShell.",
+            "default": null
+        },
+        "value": "XXX$TestStringXXXZZZ$TestStringSetZZZ"
+    },
+    "TestParamString3": {
+        "_meta": {
+            "comment": "This gets expanded correctly when script is launched from VS Code, but not from PowerShell.",
+            "default": null
+        },
+        
+        "value": "XXX$TestString`XXXZZZ$TestStringSet`ZZZ"
+    },
+    "TestParamString4": {
+        "_meta": {
+            "default": null
+        },
+        "value": "XXX`$TestString`XXXZZZ`$TestStringSet`ZZZ"
+    },
+    "TestTrueOrFalse": {
+        "value": true
+    },
+    "TestNumber": {
+        "_meta": {
+            "set": "0-[int]::MaxValue",
+            "default": "0"
+        },
+        "value": "1000"
+    },
+    "TestArray": {
+        "_meta": {
+            "default": ["StringArray_Default_1", "StringArray_Default_2"]
+        },
+        "value": ["StringArray_Config_1", "StringArray_Config_2"]
+    }
+}
