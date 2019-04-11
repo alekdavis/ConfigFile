@@ -93,7 +93,7 @@ A config file must be in the [JSON](https://www.json.org/) format, such as:
     },
     "PSVariableParam": {
         "_meta": {
-            "default": "Can hold expandable PowerShell variables (may need to use backtick char '`' to separate parameter from literal."
+            "comment": "Can hold expandable PowerShell variables (may need to use backtick char '`' to separate parameter from literal."
         },
         "value": "xxx$env:PROCESSOR_IDENTIFIER`xxx"
     },
