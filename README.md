@@ -21,7 +21,7 @@ Import-ConfigFile `
 
 #### Arguments
 
-`-ConfigFile`
+`-ConfigFilePath`
 
 Path to the config file. If the path is specified, the file must exist; otherwise, it is considered optional and, if not found, it will be ignored. The default config file path is named after the calling script with the `.json` extension. For example, if the path of the calling script is `C:\Scripts\MyScript.ps1`, the default config file path will be `C:\Scripts\MyScript.ps1`.
 
