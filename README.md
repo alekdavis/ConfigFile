@@ -114,7 +114,7 @@ A config file must be in the [JSON](https://www.json.org/) format, such as:
     }
 }
 ```
-The `_meta` element describes the config file structure. It does not include any configuration settings. The important attributes of the `_meta` element are:
+The root `_meta` element describes the config file structure. It does not include any configuration settings. The important attributes of the `_meta` element are:
 
 `version`
 
@@ -128,7 +128,7 @@ When set to `true`, every config setting that needs to be used must have the `ha
 
 Identifies the prefix that indicates that the JSON element should not be processed. The default value is the underscore character.
 
-The `_meta` elements are optional and can be used for improved readability. For example, they may include parameter descriptions, special instructions, default values, supported value sets, and so on. As long as they do not break the parser, feel free to use them at your convinience.
+The non-root `_meta` elements are optional and can be used for improved readability. For example, they may include parameter descriptions, special instructions, default values, supported value sets, and so on. As long as they do not break the parser, feel free to use them at your convinience.
 
 ##### Limitations
 
