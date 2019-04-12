@@ -55,6 +55,9 @@ Loads settings from the specified config file into the script variables.
 Import-ConfigFile -DefaultParameters $PSBoundParameters
 Loads settings from the default config file into the script variables
 ignoring parameters explicitly passed via command line.
+
+.LINK
+https://github.com/alekdavis/ConfigFile
 #>
 
 function Import-ConfigFile {
