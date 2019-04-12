@@ -1,4 +1,3 @@
-#------------------------------------------------------------------------------
 <#
 .SYNOPSIS
 PowerShell commandlet loading settings from a config file into the calling
@@ -7,11 +6,9 @@ script's command-line parameters and variables.
 .LINK
 https://github.com/alekdavis/ConfigFile
 #>
-#------------------------------------------------------------------------------
 
 #Requires -Version 4.0
 
-#------------------------------------------------------------------------------
 <#
 .SYNOPSIS
 Sets script parameters and variables using the values in a config file.
