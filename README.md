@@ -7,7 +7,7 @@ The `ConfigFile` module exports the following cmdlet:
 - Import-ConfigFile
 
 ### Import-ConfigFile
-Use `Import-ConfigFile` to import settings from the script's config file directly into the corresponding parameters and variables. You can specify the path to the config file or leave cmdlet pick the default. The config file can have any type of data, including expandable variable, such as environment variables, like `%PATH%` or `$env:Path`. The cmdlet can ignore the parameters explicitly passed via command line.
+Use `Import-ConfigFile` to import settings from the script's config file directly into the parameters and variables with the matching names. You can specify the path to the config file or leave cmdlet pick the default. The config file can have any type of data, including expandable variable, such as environment variables, like `%PATH%` or `$env:Path`. The cmdlet can ignore the parameters explicitly passed via command line.
 
 #### Syntax
 
@@ -138,17 +138,17 @@ Do not cross-reference other parameters (as illustrated in the example above). T
 
 #### Examples
 
-##### Example 1 
-```PowerShell
-Import-ConfigFile -DefaultParameters $PSBoundParameters
-```
-Loads settings from the default config file into the script variables ignoring parameters explicitly passed via command line.
-
-#### Example 2
+#### Example 1
 ```PowerShell
 Import-ConfigFile
 ```
 Checks if the default JSON config file exists, and if so, loads settings from the file into the script variables.
+
+##### Example 2 
+```PowerShell
+Import-ConfigFile -DefaultParameters $PSBoundParameters
+```
+Checks if the default JSON config file exists, and if so, loads settings from the file into the script variables ignoring parameters explicitly passed via command line.
 
 #### Example 3
 ```PowerShell
