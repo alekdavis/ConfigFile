@@ -136,9 +136,13 @@ While you can combine literals and expandable variables, do not combine environm
 
 Do not cross-reference other parameters (as illustrated in the example above). There seems to be a bug in PowerShell that would not expand variables under certain conditions (e.g. the expansion works fine when it is called from a script, or when running a script invoking the module in Visual Studio Code, but it fails when the module us invoked from a script running in the PowerShell command prompt).
 
+#### Usage
+
+You can download a copy of the module from the [Github repository](ConfigFile) or install it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile/1.0.0).
+
 #### Examples
 
-#### Example 1
+##### Example 1
 ```PowerShell
 Import-ConfigFile
 ```
@@ -150,7 +154,7 @@ Import-ConfigFile -DefaultParameters $PSBoundParameters
 ```
 Checks if the default JSON config file exists, and if so, loads settings from the file into the script variables ignoring parameters explicitly passed via command line.
 
-#### Example 3
+##### Example 3
 ```PowerShell
 Import-ConfigFile -ConfigFilePath "C:\Scripts\MyScript.ps1.DEBUG.json" -DefaultParameters $PSBoundParameters
 ```
