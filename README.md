@@ -130,7 +130,7 @@ Identifies the prefix that indicates that the JSON element should not be process
 
 The non-root `_meta` elements are optional and can be used for improved readability. For example, they may include parameter descriptions, special instructions, default values, supported value sets, and so on. As long as they do not break the parser, feel free to use them at your convinience.
 
-##### Limitations
+#### Limitations
 
 While you can combine literals and expandable variables, do not combine environment variable notation and PowerShell expandable variables, such as `xxx%PATH%xxx$env:PROCESSOR_IDENTIFIER`xxx`, in the same parameter value.
 
