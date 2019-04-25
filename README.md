@@ -14,7 +14,7 @@ Use `Import-ConfigFile` to import settings from the script's config file directl
 ```PowerShell
 Import-ConfigFile `
   [-ConfigFilePath <string>] `
-  [[-Format {Json}] | [-Json]] `
+  [[-Format {Json|Ini}] | [-Json] | [-Ini]] `
   [-DefaultParameters <hashtable>] `
   [<CommonParameters>]
 ```
@@ -27,11 +27,15 @@ Path to the config file. If the path is specified, the file must exist; otherwis
 
 `-Format`
 
-Format of the config file. At this time, only `Json` format is supported.
+Format of the config file: `Json` (default) or `Ini`.
 
 `-Json`
 
 A shortcut for `-Format Json`.
+
+`-Ini`
+
+A shortcut for `-Format Ini`.
 
 `-DefaultParameters`
 
@@ -42,7 +46,10 @@ A hashtable holding the list of parameters that will not be imported from the co
 Common PowerShell parameters (cmdlet is not using these explicitly).
 
 #### Config file
-A config file must be in the [JSON](https://www.json.org/) format, such as:
+A config file must be in the JSON or INI format.
+
+##### JSON config file
+A JSON config file must comply with the  [JSON](https://www.json.org/) specifications and must be in the following format:
 
 ```JavaScript
 {
@@ -130,11 +137,51 @@ Identifies the prefix that indicates that the JSON element should not be process
 
 The non-root `_meta` elements are optional and can be used for improved readability. For example, they may include parameter descriptions, special instructions, default values, supported value sets, and so on. As long as they do not break the parser, feel free to use them at your convinience.
 
+##### INI config file
+
+An INI config file is intended for simple configuration settings. The format must follow the standard [INI](https://en.wikipedia.org/wiki/INI_file) file specifications with a few possible adjustments. The following rules apply to the INI config files:
+
+- White spaces in the beginning of the strings will be discarded.
+- White spaces before the first equal sign will be discarded.
+- White spaces following the first equal sign will not be discarded.
+- If the first non-space character in the line is non-alphabetic, the line is are treated as a comments.
+- Comments cannot be in-line (the whole line is considered a comment).
+- Lines containing `name=value` pairs can contain expandable elements (just like in the JSON config files).
+- Names must be alpha-numeric.
+- Values may contain equal signs.
+- A single backtick or a tilde character immediately preceding the first equal sign  (```=`, `~=`) indicate that the value possibly coontaning expansion characters (`%`, `$`) should not be expanded and must be treated as a literal.
+- Any non-space, non-alhanumeric character or collection of characters, with the exception of the backtick and tilde characters, will be used as a delimeter of the array elements specified in the value.
+- Only primitive data types are supported: strings, expansion strings, numerical, boolean, dates, string arrays.
+
+The following is an example of an INI file with the settings matching the JSON config sample above:
+
+```TXT
+; SAMPLE INI FILE
+
+TestString=StringFreeForm_Config_INI
+TestStringSet=StringFromSet_Config_INI
+TestStringEmpty=$null
+TestLiteralPSVariable`=$env:PROCESSOR_IDENTIFIER|$env:PROCESSOR_LEVEL
+TestLiteralEnvironmentVariable~=%CommonProgramFiles%|%ProgramFiles%
+TestStringDefault=StringDefault_Config_INI
+TestEnvironmentVariable=%CommonProgramFiles%|%ProgramFiles%
+TestPSVariable=$env:PROCESSOR_IDENTIFIER|$env:PROCESSOR_LEVEL
+TestPSVariableEx=XXX$env:CommonProgramFiles`XXX
+TestParamString1=$TestString
+TestParamString2=XXX$TestStringXXXZZZ$TestStringSetZZZ
+TestParamString3=XXX$TestString`XXXZZZ$TestStringSet`ZZZ
+TestParamString4=XXX`$TestString`XXXZZZ`$TestStringSet`ZZZ
+TestTrueOrFalse=true
+TestNumber=1000
+TestArray=StringArray_Config_1_INI,StringArray_Config_2_INI
+TestDate=2017-12-31 13:24:32.198
+```
+
 #### Limitations
 
 While you can combine literals and expandable variables, do not combine environment variable notation and PowerShell expandable variables, such as `xxx%PATH%xxx$env:PROCESSOR_IDENTIFIER`xxx`, in the same parameter value.
 
-Do not cross-reference other parameters (as illustrated in the example above). There seems to be a bug in PowerShell that would not expand variables under certain conditions (e.g. the expansion works fine when it is called from a script, or when running a script invoking the module in Visual Studio Code, but it fails when the module us invoked from a script running in the PowerShell command prompt).
+Do not cross-reference other parameters (as illustrated in the example above). There seems to be a bug in PowerShell that would not expand variables under certain conditions (e.g. the expansion works fine when it is called from a script, or when running a script invoking the module in Visual Studio Code, but it fails when the module us invoked from a script running in the PowerShell command prompt). There is a chance that this is a bug in PowerShell that will be fixed, so use your own judgement and test, test, test.
 
 #### Usage
 
