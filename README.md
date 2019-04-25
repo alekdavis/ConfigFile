@@ -195,13 +195,19 @@ Import-ConfigFile
 ```
 Checks if the default JSON config file exists, and if so, loads settings from the file into the script variables.
 
-##### Example 2 
+##### Example 2
+```PowerShell
+Import-ConfigFile -Ini
+```
+Checks if the default INI config file exists, and if so, loads settings from the file into the script variables.
+
+##### Example 3 
 ```PowerShell
 Import-ConfigFile -DefaultParameters $PSBoundParameters
 ```
 Checks if the default JSON config file exists, and if so, loads settings from the file into the script variables ignoring parameters explicitly passed via command line.
 
-##### Example 3
+##### Example 4
 ```PowerShell
 Import-ConfigFile -ConfigFilePath "C:\Scripts\MyScript.ps1.DEBUG.json" -DefaultParameters $PSBoundParameters
 ```
