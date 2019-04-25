@@ -314,6 +314,13 @@ function Import-ConfigFile {
             "^\s*([a-zA-Z\d]+)\s*([^\sa-zA-Z\d=]*)=(.*)" {
                 $name,$delimeter,$value = $matches[1..3]
 
+                # Check if parameter is specified on command line.
+                if ($DefaultParameters) {
+                    if ($DefaultParameters.ContainsKey($name)) {
+                        continue
+                    }
+                }
+
                 $iniData[$name] = $value, $delimeter
             }
         }
