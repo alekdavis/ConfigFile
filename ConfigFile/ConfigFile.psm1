@@ -357,12 +357,6 @@ function Import-ConfigFile {
                 }
 
                 if ($name) {
-                    if ($count -eq 0) {
-                        Write-Verbose "Setting variable(s):"
-                    }
-
-                    Write-Verbose "-$name '$value'"
-
                     $var = $null
 
                     if ($PSCmdlet) {
@@ -374,6 +368,12 @@ function Import-ConfigFile {
                     }
 
                     if ($var) {
+                        if ($count -eq 0) {
+                            Write-Verbose "Setting variable(s):"
+                        }
+
+                        Write-Verbose "-$name '$value'"
+
                         # Process an array variable.
                         if ($var.Value -is [Array]) {
                             # If there is no delimeter specified, use comma.
@@ -390,10 +390,10 @@ function Import-ConfigFile {
                         else {
                             $var.Value = [System.Management.Automation.LanguagePrimitives]::ConvertTo($value, $var.Value.GetType())
                         }
-                    }
 
-                    # Count the number of processed variables.
-                    $count++
+                        # Count the number of processed variables.
+                        $count++
+                    }
                 }
             }
         }
