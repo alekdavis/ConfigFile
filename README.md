@@ -149,7 +149,7 @@ An INI config file is intended for simple configuration settings. The format mus
 - Lines containing `name=value` pairs can contain expandable elements (just like in the JSON config files).
 - Names must be alpha-numeric.
 - Values may contain equal signs.
-- A single backtick or a tilde character immediately preceding the first equal sign  (```=`, `~=`) indicates that the value possibly coontaning expansion characters (`%`, `$`) should not be expanded and must be treated as a literal.
+- A single backtick or a tilde character immediately preceding the first equal sign  (```=``, `~=`) indicates that the value possibly coontaning expansion characters (`%`, `$`) should not be expanded and must be treated as a literal.
 - Any non-space, non-alhanumeric character or collection of characters, with the exception of the backtick and tilde characters, immediately preceding the first equal sign (`,=`, `;=`, `###=`, `@@`, and so on) will be used as a delimeter of the array elements specified in the value (comma is the default delimeter and does not need to be explicitly specified).
 - Only primitive data types are supported: strings, expansion strings, numerical, boolean, dates, string arrays.
 
