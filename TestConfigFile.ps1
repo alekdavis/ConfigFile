@@ -1,11 +1,11 @@
-﻿<#
+<#
 .SYNOPSIS
 Example of a script using the ConfigFile module to import settings from a config file.
 
 .NOTES
-Version    : 1.0.0
+Version    : 1.1.0
 Author     : Alek Davis
-Created on : 2019-04-10
+Created on : 2019-04-25
 License    : MIT License
 LicenseLink: https://github.com/alekdavis/ConfigFile/blob/master/LICENSE
 Copyright  : (c) 2019 Alek Davis
@@ -21,7 +21,7 @@ param (
     $TestString = "StringFreeForm_Default",
 
     # Will hold a restricted string values from the config file.
-    [ValidateSet("StringFromSet_Default","StringFromSet_Config")]
+    [ValidateSet("StringFromSet_Default","StringFromSet_Config","StringFromSet_Config_INI")]
     [string]
     $TestStringSet = "StringFromSet_Default",
 
@@ -85,13 +85,28 @@ $TestArray = @(
     "StringArray_Default_2"
 )
 
+$TestDate = (Get-Date)
+
+"LOADING MODULE..."
 $modulePath = Join-Path (Join-Path (Split-Path -Path $PSCommandPath -Parent) 'ConfigFile') 'ConfigFile.psm1'
 Import-Module $modulePath -ErrorAction Stop -Force
 
-Import-ConfigFile -DefaultParameters $PSBoundParameters
+"`nIMPORTING JSON CONFIG FILE..."
+Import-ConfigFile -Json -DefaultParameters $PSBoundParameters
 
 # Add a new element to the array.
-$TestArray += "StringArray_Runtime_1"
+$TestArray += "StringArray_Runtime_1_JSON"
 
 # Display all script variables that start with 'Test'.
+"`nJSON CONFIG APPLIED:"
+Get-Variable -Scope Script | Where -Property Name -Match "^Test"
+
+"`nIMPORTING INI CONFIG FILE..."
+Import-ConfigFile -Ini -DefaultParameters $PSBoundParameters
+
+# Add a new element to the array.
+$TestArray += "StringArray_Runtime_1_INI"
+
+# Display all script variables that start with 'Test'.
+"`nINI CONFIG APPLIED:`n"
 Get-Variable -Scope Script | Where -Property Name -Match "^Test"
