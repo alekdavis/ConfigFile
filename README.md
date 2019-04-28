@@ -181,7 +181,7 @@ TestDate=2017-12-31 13:24:32.198
 
 While you can combine literals and expandable variables, do not combine environment variable notation and PowerShell expandable variables, such as `%PATH%|$env:PROCESSOR_IDENTIFIER`, in the same parameter value.
 
-Do not cross-reference other parameters (as illustrated in the example above). There seems to be a bug in PowerShell that would not expand variables under certain conditions (e.g. the expansion works fine when it is called from a script, or when running a script invoking the module in Visual Studio Code, but it fails when the module us invoked from a script running in the PowerShell command prompt). There is a chance that this is a bug in PowerShell that will be fixed, so use your own judgement and test, test, test.
+Do not cross-reference other parameters (as illustrated in the example above). There seems to be a bug in PowerShell that causes variables to not expand under certain conditions (e.g. the expansion works fine when it is called from a script, or when running a script invoking the module in Visual Studio Code, but it fails when the module us invoked from a script running in the PowerShell command prompt). There is a chance that this is a bug in PowerShell that will be fixed, so use your own judgement and test, test, test.
 
 #### Usage
 
