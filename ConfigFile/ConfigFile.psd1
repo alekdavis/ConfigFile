@@ -30,7 +30,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) 2019 Alek Davis. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Imports settings from a config file into the PowerShell script command-line parameters and variables.'
+Description = 'Imports settings from a config file into the PowerShell script's command-line parameters and variables.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '4.0'
