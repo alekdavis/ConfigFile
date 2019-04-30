@@ -185,29 +185,66 @@ Do not cross-reference other parameters (as illustrated in the example above). T
 
 #### Usage
 
-You can download a copy of the module from the [Github repository](ConfigFile) or install it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile/1.0.0).
+You can download a copy of the module from the [Github repository](ConfigFile) or install it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile/1.0.0) (see [Examples](#Examples).
 
 #### Examples
 
 ##### Example 1
 ```PowerShell
+function LoadModule {
+    param(
+        [string]
+        $ModuleName
+    )
+
+    if (!(Get-Module -Name $ModuleName)) {
+
+        if (!(Get-Module -Listavailable -Name $ModuleName)) {
+            Install-Module -Name $ModuleName -Force -Scope CurrentUser -ErrorAction Stop
+        }
+
+        Import-Module $ModuleName -ErrorAction Stop -Force
+    }
+}
+
+$modules = @("ConfigFile")
+foreach ($module in $modules) {
+    try {
+        LoadModule -ModuleName $module
+    }
+    catch {
+        throw (New-Object System.Exception "Cannot load module $module.", $_.Exception)
+    }
+}
+```
+Downloads the `ConfigFile` module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile/1.0.0) into the PowerShell modules folder for the current user and imports it into the running script.
+
+##### Example 2
+```PowerShell
+$modulePath = Join-Path (Split-Path -Path $PSCommandPath -Parent) 'ConfigFile.psm1'
+Import-Module $modulePath -ErrorAction Stop -Force
+```
+Imports the `ConfigFile` module from the same directory as the running script.
+
+##### Example 3
+```PowerShell
 Import-ConfigFile
 ```
 Checks if the default JSON config file exists, and if so, loads settings from the file into the script variables.
 
-##### Example 2
+##### Example 4
 ```PowerShell
 Import-ConfigFile -Ini
 ```
 Checks if the default INI config file exists, and if so, loads settings from the file into the script variables.
 
-##### Example 3 
+##### Example 5
 ```PowerShell
 Import-ConfigFile -DefaultParameters $PSBoundParameters
 ```
 Checks if the default JSON config file exists, and if so, loads settings from the file into the script variables ignoring parameters explicitly passed via command line.
 
-##### Example 4
+##### Example 6
 ```PowerShell
 Import-ConfigFile -ConfigFilePath "C:\Scripts\MyScript.ps1.DEBUG.json" -DefaultParameters $PSBoundParameters
 ```
