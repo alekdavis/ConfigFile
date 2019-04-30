@@ -185,7 +185,7 @@ Do not cross-reference other parameters (as illustrated in the example above). T
 
 #### Usage
 
-You can download a copy of the module from the [Github repository](ConfigFile) or install it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile/1.0.0) (see [Examples](#Examples).
+You can download a copy of the module from the [Github repository](ConfigFile) or install it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile) (see [Examples](#Examples)).
 
 #### Examples
 
@@ -217,7 +217,7 @@ foreach ($module in $modules) {
     }
 }
 ```
-Downloads the `ConfigFile` module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile/1.0.0) into the PowerShell modules folder for the current user and imports it into the running script.
+Downloads the `ConfigFile` module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile) into the PowerShell modules folder for the current user and imports it into the running script.
 
 ##### Example 2
 ```PowerShell
