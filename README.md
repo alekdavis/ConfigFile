@@ -49,7 +49,7 @@ Common PowerShell parameters (cmdlet is not using these explicitly).
 A config file must be in the JSON or INI format.
 
 ##### JSON config file
-A JSON config file must comply with the  [JSON](https://www.json.org/) specifications and must be in the following format:
+A JSON config file must comply with the  [JSON](https://www.json.org/) specifications and must be in the format similar to this:
 
 ```JavaScript
 {
@@ -121,6 +121,8 @@ A JSON config file must comply with the  [JSON](https://www.json.org/) specifica
     }
 }
 ```
+
+###### \_meta element
 The root `_meta` element describes the config file structure. It does not include any configuration settings. The important attributes of the `_meta` element are:
 
 `version`
@@ -137,6 +139,10 @@ Identifies the prefix that indicates that the JSON element should not be process
 
 The non-root `_meta` elements are optional and can be used for improved readability. For example, they may include parameter descriptions, special instructions, default values, supported value sets, and so on. As long as they do not break the parser, feel free to use them at your convinience.
 
+###### Data elements
+
+All elements other than `_meta` are expected to contain data values assigned to the `value` properties. By default, all elements holding non-empty, non-null, non-false data are considered to contain values. If an element's `value` property contains a null, empty, or false value, it will be ignored. To include a null, empty, or false value, set the `hasValue` property to `true`. To exclude a na element with a non-empty, non-null, non-false values, set the `hasValue` property to `false`. All other properties are optional and can be ignored. 
+
 ##### INI config file
 
 An INI config file is intended for simple configuration settings. The format must follow the standard [INI](https://en.wikipedia.org/wiki/INI_file) file specifications with a few possible adjustments. The following rules apply to the INI config files:
@@ -144,16 +150,16 @@ An INI config file is intended for simple configuration settings. The format mus
 - White spaces in the beginning of the strings will be discarded.
 - White spaces before the first equal sign will be discarded.
 - White spaces following the first equal sign will not be discarded.
-- If the first non-space character in the line is non-alphabetic, the line is are treated as a comment.
-- Comments cannot be in-line (the whole line is considered a comment).
+- If the first non-space character in the line is non-alphabetic, the line is treated as a comment.
+- Comments cannot be in-line (only the whole line is considered a comment).
 - Lines containing `name=value` pairs can contain expandable elements (just like in the JSON config files).
 - Names must be alpha-numeric.
 - Values may contain equal signs.
 - A single backtick or a tilde character immediately preceding the first equal sign  (`` `= ``, ` ~= `) indicates that the value possibly coontaning expansion characters (`%`, `$`) should not be expanded and must be treated as a literal.
-- Any non-space, non-alhanumeric character or collection of characters, with the exception of the backtick and tilde characters, immediately preceding the first equal sign (`,=`, `;=`, `###=`, `@@=`, and so on) will be used as a delimeter of the array elements specified in the value (comma is the default delimeter and does not need to be explicitly specified).
-- Only primitive data types are supported: strings, expansion strings, numerical, boolean, dates, string arrays.
+- Any non-space, non-alhanumeric character or collection of characters, with the exception of the backtick and tilde characters, immediately preceding the first equal sign (e.g `,=`, `;=`, `###=`, `@@=`, and so on) will be used as a delimeter for the array elements specified in the value (comma is the default delimeter and does not need to be explicitly specified).
+- Only primitive data types are supported: strings, expansion strings, numeric, boolean, dates, and string arrays.
 
-The following is an example of an INI file with the settings matching the JSON config sample above:
+The following is an example of an INI file with the settings matching the [JSON config sample](#json-config-file) above:
 
 ```TXT
 ; SAMPLE INI FILE
