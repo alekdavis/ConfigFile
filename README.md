@@ -141,7 +141,7 @@ The non-root `_meta` elements are optional and can be used for improved readabil
 
 ###### Data elements
 
-All elements other than `_meta` are expected to contain data values assigned to the `value` properties. By default, all elements holding non-empty, non-null, non-false data are considered to contain values. If an element's `value` property contains a null, empty, or false value, it will be ignored. To include a null, empty, or false value, set the `hasValue` property to `true`. To exclude a na element with a non-empty, non-null, non-false values, set the `hasValue` property to `false`. All other properties are optional and can be ignored. 
+All elements other than `_meta` are expected to contain data values assigned to the `value` properties. By default, all elements holding non-empty, non-null, non-false data are considered to contain values. If an element's `value` property contains a null, empty, or false value, it will be ignored. To include a null, empty, or false value, set the `hasValue` property to `true`. To exclude an element with a non-empty, non-null, non-false values, set the `hasValue` property to `false`. All other properties are optional and can be ignored. 
 
 ##### INI config file
 
