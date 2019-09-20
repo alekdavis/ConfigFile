@@ -125,11 +125,14 @@ function Import-ConfigFile {
         # Default config file is named after running script with .json extension.
 
         # First try the invoking script.
-        $ConfigFilePath = $PSCommandPath
+        $ConfigFilePath = $null
 
         # If the invoking script is a module, check the caller.
         if ($PSCmdlet) {
             $ConfigFilePath = $MyInvocation.PSCommandPath
+        }
+        else {
+            $ConfigFilePath = $PSCommandPath
         }
 
         # Set appropriate format.
@@ -160,7 +163,7 @@ function Import-ConfigFile {
     # Process JSON file.
     if ($Format -eq "Json") {
         $jsonString = Get-Content $ConfigFilePath -Raw `
-        -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
+            -ErrorAction:SilentlyContinue -WarningAction:SilentlyContinue
 
         if (!$jsonString) {
             Write-Verbose "Config file is empty."
@@ -304,15 +307,15 @@ function Import-ConfigFile {
             #   name=value
             #   name~=%value% (~ indicates that the string is literal and should not be expanded)
             #   name`=$value (` indicates that the string is literal and should not be expanded)
-            #   name;=value1;value2;value3 (; is used as a delimeter for array elements)
-            #   name@@@=value1@@@value2@@@value3 (@@@ is used as a delimeter for array elements)
+            #   name;=value1;value2;value3 (; is used as a delimiter for array elements)
+            #   name@@@=value1@@@value2@@@value3 (@@@ is used as a delimiter for array elements)
             # and so on.
             # A special character (or a string of special characters) before the equal sign
             # can be used as an indicator that the value should not be expanded (either ` or ~
-            # can be used for this) or contain the delimeter for array elements. Notice that
+            # can be used for this) or contain the delimiter for array elements. Notice that
             # white spaces will not be trimmed from the value(s).
             "^\s*([a-zA-Z\d]+)\s*([^\sa-zA-Z\d=]*)=(.*)" {
-                $name,$delimeter,$value = $matches[1..3]
+                $name,$delimiter,$value = $matches[1..3]
 
                 # Check if parameter is specified on command line.
                 if ($DefaultParameters) {
@@ -321,7 +324,7 @@ function Import-ConfigFile {
                     }
                 }
 
-                $iniData[$name] = $value, $delimeter
+                $iniData[$name] = $value, $delimiter
             }
         }
 
@@ -329,16 +332,16 @@ function Import-ConfigFile {
         for ($i=0; $i -lt 2; $i++) {
             foreach ($name in $iniData.Keys) {
                 $value     = $iniData[$name][0]
-                $delimeter = $iniData[$name][1]
+                $delimiter = $iniData[$name][1]
 
-                # Expandible string contains % or $, does not hold the built-in
-                # PowerShell boolean or null values, and does not have a delimeter
+                # Expandable string contains % or $, does not hold the built-in
+                # PowerShell boolean or null values, and does not have a delimiter
                 # indicator characters (` or ~) in front of the equal sign.
                 if ((($value -match "%") -or ($value -match "\$")) -and
                     ($value -ne $true) -and
                     ($value -ne $false) -and
                     ($null -ne $value) -and
-                    ($delimeter -notin '`', '~')) {
+                    ($delimiter -notin '`', '~')) {
 
                     # Skip on the first iteration in case it depends on the unread variable.
                     if ($i -eq 0) {
@@ -383,11 +386,11 @@ function Import-ConfigFile {
 
                         # Process an array variable.
                         if ($var.Value -is [Array]) {
-                            # If there is no delimeter specified, use comma.
-                            if (!$delimeter) {
-                                $delimeter = ','
+                            # If there is no delimiter specified, use comma.
+                            if (!$delimiter) {
+                                $delimiter = ','
                             }
-                            $var.Value = $value -split $delimeter
+                            $var.Value = $value -split $delimiter
                         }
                         # Process a boolean or a switch variable.
                         elseif (($var.Value -is [Boolean]) -or ($var.Value -is [Switch])) {
