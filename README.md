@@ -191,7 +191,7 @@ Do not cross-reference other parameters (as illustrated in the example above). T
 
 #### Usage
 
-You can download a copy of the module from the [Github repository](ConfigFile) or install it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile) (see [Examples](#Examples)).
+You can download a copy of the module from this Github repository or install it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ConfigFile) (see [Examples](#Examples)).
 
 #### Examples
 
