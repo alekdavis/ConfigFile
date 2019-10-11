@@ -255,3 +255,6 @@ Checks if the default JSON config file exists, and if so, loads settings from th
 Import-ConfigFile -ConfigFilePath "C:\Scripts\MyScript.ps1.DEBUG.json" -DefaultParameters $PSBoundParameters
 ```
 Loads settings from the specified config file into the script variables ignoring parameters explicitly passed via command line.
+
+## See also
+[PowerShell Configuration Data](http://ramblingcookiemonster.github.io/PowerShell-Configuration-Data/)
