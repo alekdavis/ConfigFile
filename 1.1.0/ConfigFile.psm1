@@ -272,6 +272,7 @@ function Import-ConfigFile {
                     }
                 }
 
+                # Setting the variable
                 if ($name) {
                     if ($count -eq 0) {
                         Write-Verbose "Setting variable(s):"
@@ -366,44 +367,45 @@ function Import-ConfigFile {
                     }
                 }
 
+                # Setting the variable
                 if ($name) {
-                    $var = $null
 
+                    # Set value as tempValue to easily handle different types of values (without modifying the original value)
+                    $tempValue = $value
+
+                    if ($count -eq 0) {
+                        Write-Verbose "Setting variable(s):"
+                    }
+
+                    Write-Verbose "-$name '$tempValue'"
+
+                    # Process an array variable.
+                    if ($tempValue -is [Array]) {
+                        # If there is no delimiter specified, use comma.
+                        if (!$delimiter) {
+                            $delimiter = ','
+                        }
+                        $tempValue = $tempValue -split $delimiter
+                    }
+                    # Process a boolean or a switch variable.
+                    elseif (($tempValue -is [Boolean]) -or ($tempValue -is [Switch])) {
+                        $tempValue = $tempValue -notin 'false', '$false', '0', ''
+                    }
+                    # Process any other data type.
+                    else {
+                        $tempValue = [System.Management.Automation.LanguagePrimitives]::ConvertTo($tempValue, $tempValue.GetType())
+                    }
+
+                    # Set variable
                     if ($PSCmdlet) {
-                        $var =  $PSCmdlet.SessionState.PSVariable.Get($name)
+                        $PSCmdlet.SessionState.PSVariable.Set($name,$tempValue)
                     }
                     else {
-                        #$var =  Get-Variable -Scope Script -Name $name -Visibility Public
-                        $var =  Get-Variable -Scope Script -Name $name
+                        Set-Variable -Scope Script -Name $name -Value $tempValue -Force -Visibility Private
                     }
 
-                    if ($var) {
-                        if ($count -eq 0) {
-                            Write-Verbose "Setting variable(s):"
-                        }
-
-                        Write-Verbose "-$name '$value'"
-
-                        # Process an array variable.
-                        if ($var.Value -is [Array]) {
-                            # If there is no delimiter specified, use comma.
-                            if (!$delimiter) {
-                                $delimiter = ','
-                            }
-                            $var.Value = $value -split $delimiter
-                        }
-                        # Process a boolean or a switch variable.
-                        elseif (($var.Value -is [Boolean]) -or ($var.Value -is [Switch])) {
-                            $var.Value = $value -notin 'false', '$false', '0', ''
-                        }
-                        # Process any other data type.
-                        else {
-                            $var.Value = [System.Management.Automation.LanguagePrimitives]::ConvertTo($value, $var.Value.GetType())
-                        }
-
-                        # Count the number of processed variables.
-                        $count++
-                    }
+                    # Count the number of processed variables.
+                    $count++
                 }
             }
         }
